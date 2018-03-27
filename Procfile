@@ -1,2 +1,2 @@
 web: gunicorn app:app
-release: python app.py
+release: python run.py
