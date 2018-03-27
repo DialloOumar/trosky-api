@@ -1,0 +1,5 @@
+
+      [console_scripts]
+      retools-worker = retools.queue:run_worker
+
+      

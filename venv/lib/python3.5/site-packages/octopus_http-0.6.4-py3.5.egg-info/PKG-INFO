@@ -1,0 +1,22 @@
+Metadata-Version: 1.1
+Name: octopus-http
+Version: 0.6.4
+Summary: Octopus is a library to use threads to concurrently retrieve and report on the completion of http requests
+Home-page: https://heynemann.github.io/octopus
+Author: Bernardo Heynemann
+Author-email: heynemann@gmail.com
+License: MIT
+Description: 
+        Octopus is a library to use threads to concurrently retrieve and report on the completion of http requests
+        
+Keywords: http concurrency threading
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Natural Language :: English
+Classifier: Operating System :: MacOS
+Classifier: Operating System :: POSIX
+Classifier: Operating System :: Unix
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 2.7

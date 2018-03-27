@@ -1,0 +1,15 @@
+six
+requests
+tornado
+retools
+cyrusbus
+
+[tests]
+mock
+nose
+coverage
+yanc
+preggy
+tox
+ipdb
+coveralls
