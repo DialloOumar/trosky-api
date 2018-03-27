@@ -97,6 +97,6 @@ def remove_duplicate(raw_data):
 
     return result
 
-#
-# if __name__ == "__main__":
-#     app.run(debug=True)
+
+if __name__ == "__main__":
+    app.run(debug=True)
