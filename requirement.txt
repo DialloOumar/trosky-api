@@ -4,12 +4,10 @@ click==6.7
 cyrusbus==0.1.0
 Flask==0.12.2
 googlemaps==2.5.1
-gunicorn==19.7.1
 idna==2.6
 itsdangerous==0.24
 Jinja2==2.10
 MarkupSafe==1.0
-octopus-http==0.6.4
 redis==2.10.6
 requests==2.18.4
 retools==0.4.1
@@ -18,3 +16,4 @@ six==1.11.0
 tornado==5.0.1
 urllib3==1.22
 Werkzeug==0.14.1
+uwsgi

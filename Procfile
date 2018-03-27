@@ -1,2 +1,1 @@
-web: gunicorn app:app
-release: python run.py
+web: uwsgi uwsgi.ini
