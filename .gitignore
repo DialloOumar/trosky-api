@@ -2,3 +2,4 @@ venv/
 __pycache__/
 *.pyc
 .idea/
+app/__pycache__/app.cpython-35.pyc
