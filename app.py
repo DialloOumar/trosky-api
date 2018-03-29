@@ -10,9 +10,10 @@ app = Flask(__name__)
 
 @app.route("/routes", methods=["GET"])
 def find_route():
-    key = config.config['apiKey']
+    key = request.args.get("key")
     origin = request.args.get("origin")
     destination = request.args.get("destination")
+
     # origin = "5.5985513, -0.2234973"
     # destination = "5.606176, -0.248757"
 
@@ -45,6 +46,32 @@ def find_route():
                     "routes": [],
                     "stops": stops,
                     "message": message})
+
+
+@app.route("/closeBusStops", methods=["GET"])
+def get_close_bus_stops():
+    """Getting close bus stops.
+
+    This route returns a list of the closest to a particular location
+    @:param origin: location you want to get the closest bus stops from
+    :return: Json List of 4 buse stops
+    """
+    origin = request.args.get("origin")
+
+    url = "https://cryptic-mountain-86599.herokuapp.com/getClosestStops?location={}".format(origin)
+    response = requests.get(url)
+    response = response.json()
+
+    bus_stops = {"status": response.get("status"),
+                 "message": response.get("message"),
+                 "busStop": []}
+
+    for stop in response.get("busStops"):
+        temp = {"stop_location": stop.get("busStopLocation"),
+                "stop_name": stop.get("busStopName")}
+        bus_stops["busStop"].append(temp)
+
+    return jsonify(bus_stops)
 
 
 def trosky_api(origin, destination):
