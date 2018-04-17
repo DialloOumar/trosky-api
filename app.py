@@ -26,19 +26,30 @@ def find_route():
     if status == 202:
         stops = remove_duplicate(stops)
 
-        chunks = [waypoints[x:x + 23] for x in range(0, len(waypoints), 23)]
+        # chunks = [waypoints[x:x + 23] for x in range(0, len(waypoints), 23)]
 
         final_data = {"status": status,
                       "routes": [],
                       "stops": stops,
                       "message": message}
 
-        for i in chunks:
-            directions_result = gmaps.directions(origin=i[0],
-                                                 destination=i[-1],
-                                                 waypoints=i,
-                                                 departure_time=now)
-            final_data["routes"].append(directions_result[0])
+        for i in waypoints:
+
+            if len(i) <= 23:
+                directions_result = gmaps.directions(origin=i[0],
+                                                     destination=i[-1],
+                                                     waypoints=i,
+                                                     departure_time=now)
+                final_data["routes"].append(directions_result[0])
+            else:
+                chunks = [i[x:x + 23] for x in range(0, len(waypoints), 23)]
+
+                for j in chunks:
+                    directions_result = gmaps.directions(origin=j[0],
+                                                         destination=j[-1],
+                                                         waypoints=j,
+                                                         departure_time=now)
+                    final_data["routes"].append(directions_result[0])
 
         return jsonify(final_data)
 
@@ -106,9 +117,11 @@ def trosky_api(origin, destination):
             stops.append({"bus_name": bus_name,
                           "stop_name": path.get("busStopsList")[-1].get("busStopName"),
                           "stop_location": path.get("busStopsList")[-1].get("busStopLocation")})
-
+            temp = []
             for bus_stop in path.get("busStopsList"):
-                waypoints.append(bus_stop.get("busStopLocation"))
+                temp.append(bus_stop.get("busStopLocation"))
+
+            waypoints.append(temp)
 
     return stops, waypoints, status, message
 
@@ -127,3 +140,26 @@ def remove_duplicate(raw_data):
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+# if len(i) <= 23:
+#     directions_result = gmaps.directions(origin=i[0],
+#                                          destination=i[-1],
+#                                          waypoints=i,
+#                                          departure_time=now)
+#     final_data["routes"].append(directions_result[0])
+# else:
+#     chunks = [i[x:x + 23] for x in range(0, len(waypoints), 23)]
+#
+#     for j in chunks:
+#         directions_result = gmaps.directions(origin=i[0],
+#                                              destination=i[-1],
+#                                              waypoints=i,
+#                                              departure_time=now)
+#     final_data["routes"].append(directions_result[0])
+
+# for i in chunks:
+#     directions_result = gmaps.directions(origin=i[0],
+#                                          destination=i[-1],
+#                                          waypoints=i,
+#                                          departure_time=now)
+#     final_data["routes"].append(directions_result[0])
