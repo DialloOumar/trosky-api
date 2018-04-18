@@ -39,6 +39,7 @@ def find_route():
             path_list = path.get("path")
             if path.get("bus_id") is 0:
                 pass
+
                 # arr = []
                 # directions_result = gmaps.directions(origin =start,
                 #                                      destination=end,
