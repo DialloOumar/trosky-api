@@ -34,15 +34,40 @@ def find_route():
 
         for path in total_path:
 
-            origin = path.get("origin")
-            destination = path.get("destination")
+            start = path.get("path")[0]
+            end = path.get("path")[-1]
+            path_list = path.get("path")
+            if path.get("bus_id") is 0:
+                arr = []
+                directions_result = gmaps.directions(origin =start,
+                                                     destination=end,
+                                                     mode="walking",
+                                                     departure_time=now)
+                arr.append(directions_result[0])
+                final_data["routes"].append(arr)
 
-            directions_result = gmaps.directions(origin=origin,
-                                                 destination=destination,
-                                                 mode="walking",
-                                                 departure_time=now)
+            else:
 
-            final_data["routes"].append(directions_result[0])
+                arr = []
+
+                if len(path.get("path")) <= 23:
+                    directions_result = gmaps.directions(origin=start,
+                                                         destination=end,
+                                                         waypoints=path_list,
+                                                         departure_time=now)
+                    arr.append(directions_result[0])
+                else:
+                    sub_paths = [path_list[x:x + 23] for x in range(0, len(path_list), 23)]
+
+                    for i in sub_paths:
+                        directions_result = gmaps.directions(origin=start,
+                                                             destination=end,
+                                                             waypoints=i,
+                                                             departure_time=now)
+                        arr.append(directions_result[0])
+
+                final_data["routes"].append(arr)
+
 
             # if path.get("bus_name") is "Walkable":
             #
@@ -112,40 +137,44 @@ def trosky_api(origin, destination):
 
         buses = r.get("buses")
 
-        first = True
-
         for path in r.get("paths"):
 
-            bus = path.get("busId")
+            bus_id = path.get("busId")
 
-            if bus is 0:
-                bus_name = "Walkable"
+            if bus_id is 0:
+                bus_name = "WALKING"
             else:
-                bus_name = buses[bus - 1].get("busName")
+                bus_name = buses[bus_id - 1].get("busName")
 
             first_stop_location = path.get("busStopsList")[0].get("busStopLocation")
-            last_stop_location = path.get("busStopsList")[-1].get("busStopLocation")
             first_stop_name = path.get("busStopsList")[0].get("busStopName")
-            last_stop_name = path.get("busStopsList")[-1].get("busStopName")
 
-            single_path = {"bus_name": bus_name,
-                           "origin": first_stop_location,
-                           "destination": last_stop_location}
+            # last_stop_location = path.get("busStopsList")[-1].get("busStopLocation")
+            # last_stop_name = path.get("busStopsList")[-1].get("busStopName")
+
+            single_path = []
+            for bus_stop in path.get("busStopsList"):
+                single_path.append(bus_stop.get("busStopLocation"))
+
+            single_path = {"bus_id": bus_id,
+                           "path": single_path,
+                           }
 
             route_path.append(single_path)
 
-            # if this is the first iteration of the loop take the first bus stop else take the last bus stop
-            if first:
-                stop = {"bus_name": bus_name,
-                        "stop_location": first_stop_location,
-                        "stop_name": first_stop_name}
-                stops.append(stop)
-                first = False
-            else:
-                stop = {"bus_name": bus_name,
-                        "stop_location": last_stop_location,
-                        "stop_name": last_stop_name}
-                stops.append(stop)
+            stop = {"bus_name": bus_name,
+                    "stop_location": first_stop_location,
+                    "stop_name": first_stop_name}
+
+            stops.append(stop)
+
+        last_path = r.get("paths")[-1]
+
+        last_stop = {"bus_name": "WALKING",
+                    "stop_location": last_path.get("busStopsList")[-1].get("busStopLocation"),
+                    "stop_name": last_path.get("busStopsList")[-1].get("busStopName")}
+
+        stops.append(last_stop)
 
     return stops, route_path, status, message
 
