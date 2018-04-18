@@ -114,7 +114,7 @@ def trosky_api(origin, destination):
                           "stop_name": path.get("busStopsList")[0].get("busStopName"),
                           "stop_location": path.get("busStopsList")[0].get("busStopLocation")})
 
-            stops.append({"bus_name": bus_name,
+            stops.append({"bus_name": "Walkable",
                           "stop_name": path.get("busStopsList")[-1].get("busStopName"),
                           "stop_location": path.get("busStopsList")[-1].get("busStopLocation")})
             temp = []
