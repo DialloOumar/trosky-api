@@ -38,13 +38,14 @@ def find_route():
             end = path.get("path")[-1]
             path_list = path.get("path")
             if path.get("bus_id") is 0:
-                arr = []
-                directions_result = gmaps.directions(origin =start,
-                                                     destination=end,
-                                                     mode="walking",
-                                                     departure_time=now)
-                arr.append(directions_result[0])
-                final_data["routes"].append(arr)
+                pass
+                # arr = []
+                # directions_result = gmaps.directions(origin =start,
+                #                                      destination=end,
+                #                                      mode="walking",
+                #                                      departure_time=now)
+                # arr.append(directions_result[0])
+                # final_data["routes"].append(arr)
 
             else:
 
