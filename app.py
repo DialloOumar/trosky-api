@@ -37,17 +37,9 @@ def find_route():
             start = path.get("path")[0]
             end = path.get("path")[-1]
             path_list = path.get("path")
+
             if path.get("bus_id") is 0:
                 pass
-
-                # arr = []
-                # directions_result = gmaps.directions(origin =start,
-                #                                      destination=end,
-                #                                      mode="walking",
-                #                                      departure_time=now)
-                # arr.append(directions_result[0])
-                # final_data["routes"].append(arr)
-
             else:
 
                 arr = []
@@ -62,8 +54,8 @@ def find_route():
                     sub_paths = [path_list[x:x + 23] for x in range(0, len(path_list), 23)]
 
                     for i in sub_paths:
-                        directions_result = gmaps.directions(origin=start,
-                                                             destination=end,
+                        directions_result = gmaps.directions(origin=i[0],
+                                                             destination=i[-1],
                                                              waypoints=i,
                                                              departure_time=now)
                         arr.append(directions_result[0])
