@@ -138,7 +138,7 @@ def trosky_api(origin, destination):
             if bus_id is 0:
                 bus_name = "WALKING"
             else:
-                bus_name = buses[bus_id - 1].get("busName")
+                bus_name = buses[bus_id - 1].get("busDestination")
 
             first_stop_location = path.get("busStopsList")[0].get("busStopLocation")
             first_stop_name = path.get("busStopsList")[0].get("busStopName")
