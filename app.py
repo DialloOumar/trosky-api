@@ -99,7 +99,7 @@ def get_close_bus_stops():
     """
     origin = request.args.get("origin")
 
-    url = "https://cryptic-mountain-86599.herokuapp.com/getClosestStops?location={}".format(origin)
+    url = "https://troskymate.herokuapp.com/getClosestStops?location={}".format(origin)
     response = requests.get(url)
     response = response.json()
 
@@ -116,7 +116,7 @@ def get_close_bus_stops():
 
 
 def trosky_api(origin, destination):
-    trosky_url = "https://cryptic-mountain-86599.herokuapp.com/getRoute?origin={}&destination={}".format(origin,
+    trosky_url = "https://troskymate.herokuapp.com/getRoute?origin={}&destination={}".format(origin,
                                                                                                          destination)
     r = requests.get(trosky_url)
     r = r.json()
