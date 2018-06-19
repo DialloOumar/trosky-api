@@ -138,7 +138,7 @@ def trosky_api(origin, destination):
             if bus_id is 0:
                 bus_name = "WALKING"
             else:
-                bus_name = buses[bus_id - 1].get("busName")
+                bus_name = buses[bus_id - 1].get("busDestination")
 
             first_stop_location = path.get("busStopsList")[0].get("busStopLocation")
             first_stop_name = path.get("busStopsList")[0].get("busStopName")
@@ -188,25 +188,3 @@ def remove_duplicate(raw_data):
 if __name__ == "__main__":
     app.run(debug=True)
 
-    # if len(i) <= 23:
-    #     directions_result = gmaps.directions(origin=i[0],
-    #                                          destination=i[-1],
-    #                                          waypoints=i,
-    #                                          departure_time=now)
-    #     final_data["routes"].append(directions_result[0])
-    # else:
-    #     chunks = [i[x:x + 23] for x in range(0, len(waypoints), 23)]
-    #
-    #     for j in chunks:
-    #         directions_result = gmaps.directions(origin=i[0],
-    #                                              destination=i[-1],
-    #                                              waypoints=i,
-    #                                              departure_time=now)
-    #     final_data["routes"].append(directions_result[0])
-
-    # for i in chunks:
-    #     directions_result = gmaps.directions(origin=i[0],
-    #                                          destination=i[-1],
-    #                                          waypoints=i,
-    #                                          departure_time=now)
-    #     final_data["routes"].append(directions_result[0])
